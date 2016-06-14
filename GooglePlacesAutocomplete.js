@@ -64,6 +64,7 @@ const GooglePlacesAutocomplete = React.createClass({
 
   propTypes: {
     placeholder: React.PropTypes.string,
+    placeholderTextColor: React.PropTypes.string,
     onPress: React.PropTypes.func,
     minLength: React.PropTypes.number,
     fetchDetails: React.PropTypes.bool,
@@ -89,6 +90,7 @@ const GooglePlacesAutocomplete = React.createClass({
   getDefaultProps() {
     return {
       placeholder: 'Search',
+      placeholderTextColor: '#000',
       onPress: () => {},
       minLength: 0,
       fetchDetails: false,
