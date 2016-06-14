@@ -66,6 +66,8 @@ const GooglePlacesAutocomplete = React.createClass({
     placeholder: React.PropTypes.string,
     placeholderTextColor: React.PropTypes.string,
     onPress: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
     minLength: React.PropTypes.number,
     fetchDetails: React.PropTypes.bool,
     autoFocus: React.PropTypes.bool,
@@ -84,7 +86,6 @@ const GooglePlacesAutocomplete = React.createClass({
     nearbyPlacesAPI: React.PropTypes.string,
     filterReverseGeocodingByTypes: React.PropTypes.array,
     predefinedPlacesAlwaysVisible: React.PropTypes.bool,
-    enableEmptySections: React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -92,6 +93,8 @@ const GooglePlacesAutocomplete = React.createClass({
       placeholder: 'Search',
       placeholderTextColor: '#000',
       onPress: () => {},
+      onFocus: () => {},
+      onBlur: () => {},
       minLength: 0,
       fetchDetails: false,
       autoFocus: false,
@@ -119,7 +122,6 @@ const GooglePlacesAutocomplete = React.createClass({
       nearbyPlacesAPI: 'GooglePlacesSearch',
       filterReverseGeocodingByTypes: [],
       predefinedPlacesAlwaysVisible: false,
-      enableEmptySections: true
     };
   },
 
@@ -511,15 +513,22 @@ const GooglePlacesAutocomplete = React.createClass({
     );
   },
 
-  _onBlur() {
+  _onBlur(e) {
     this.triggerBlur();
     this.setState({listViewDisplayed: false});
+    this._callback('onBlur', e);
   },
 
-  _onFocus() {
+  _onFocus(e) {
     this.setState({listViewDisplayed: true});
+    this._callback('onFocus', e);
   },
 
+  _callback(name, e) {
+    if (this.props[name]) {
+      this.props[name](e);
+    }
+  },
   _getListView() {
     if ((this.state.text !== '' || this.props.predefinedPlaces.length || this.props.currentLocation === true) && this.state.listViewDisplayed === true) {
       return (
@@ -553,7 +562,7 @@ const GooglePlacesAutocomplete = React.createClass({
     return null;
   },
   render() {
-    let { onChangeText, onFocus, ...userProps } = this.props.textInputProps;
+    let { onChangeText, onFocus, onBlur, ...userProps } = this.props.textInputProps;
     return (
       <View
         style={[defaultStyles.container, this.props.styles.container]}
@@ -571,6 +580,7 @@ const GooglePlacesAutocomplete = React.createClass({
             placeholder={this.props.placeholder}
             placeholderTextColor={this.props.placeholderTextColor}
             onFocus={onFocus ? () => {this._onFocus(); onFocus()} : this._onFocus}
+            onBlur={onBlur ? () => {this._onBlur(); onBlur()} : this._onBlur}
             clearButtonMode="while-editing"
           />
         </View>
