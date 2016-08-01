@@ -535,6 +535,7 @@ const GooglePlacesAutocomplete = React.createClass({
         <ListView
           keyboardShouldPersistTaps={true}
           keyboardDismissMode="on-drag"
+          enableEmptySections={true}
           style={[defaultStyles.listView, this.props.styles.listView]}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
