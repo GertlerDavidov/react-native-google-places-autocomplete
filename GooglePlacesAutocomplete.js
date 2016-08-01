@@ -495,7 +495,7 @@ const GooglePlacesAutocomplete = React.createClass({
         onPress={() =>
           this._onPress(rowData)
         }
-        underlayColor="#c8c7cc"
+        underlayColor="#FFF"
       >
         <View>
           <View style={[defaultStyles.row, this.props.styles.row, rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {}]}>
@@ -533,13 +533,13 @@ const GooglePlacesAutocomplete = React.createClass({
     if ((this.state.text !== '' || this.props.predefinedPlaces.length || this.props.currentLocation === true) && this.state.listViewDisplayed === true) {
       return (
         <ListView
-          keyboardShouldPersistTaps={true}
-          keyboardDismissMode="on-drag"
-          enableEmptySections={true}
-          style={[defaultStyles.listView, this.props.styles.listView]}
-          dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
-          automaticallyAdjustContentInsets={false}
+          keyboardShouldPersistTaps        = {true}
+          keyboardDismissMode              = "on-drag"
+          enableEmptySections              = {true}
+          style                            = {[defaultStyles.listView, this.props.styles.listView]}
+          dataSource                       = {this.state.dataSource}
+          renderRow                        = {this._renderRow}
+          automaticallyAdjustContentInsets ={false}
 
           {...this.props}
         />
